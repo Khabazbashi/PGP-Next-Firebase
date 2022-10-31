@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { counterRepo } from "../counterrepo";
-import Quotes from "./quotes";
+import Quotes from "../components/quotes";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 

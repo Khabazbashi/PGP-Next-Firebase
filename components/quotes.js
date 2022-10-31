@@ -1,11 +1,15 @@
+import { useEffect } from "react";
 import Quote from "./quote";
-import { useEffect, useState } from "react";
+import styles from "../styles/Quotes.module.css";
 
 const Quotes = ({ quotes, counts, handleClick }) => {
   useEffect(() => {}, [counts]);
 
+  var animations =
+    "https://www.ceciliapelosi.com/wp-content/uploads/2014/05/Doers-Fist-Bump.gif";
+
   return (
-    <>
+    <div className={styles.container}>
       {quotes.map((quote, index) => {
         return (
           <Quote
@@ -16,7 +20,7 @@ const Quotes = ({ quotes, counts, handleClick }) => {
           />
         );
       })}
-    </>
+    </div>
   );
 };
 

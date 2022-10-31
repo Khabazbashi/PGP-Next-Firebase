@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "../styles/Quote.module.css";
 
 const Quote = ({ quote, count, handleClick }) => {
   const [isLoading, setLoading] = useState(true);
@@ -25,10 +26,14 @@ const Quote = ({ quote, count, handleClick }) => {
   useEffect(() => {}, [count, handleClick]);
 
   return (
-    <div>
-      <p>{quote.value}</p>
-      <button onClick={(e) => onClick(e)}>Add</button>
-      <p>{thisCount}</p>
+    <div className={styles.container}>
+      <p className={styles.quote}>"{quote.value}"</p>
+      <p className={styles.count}>Uttered: {thisCount} times</p>
+      <div className={styles.buttonContainer}>
+        <button className={styles.button} onClick={(e) => onClick(e)}>
+          <p className={styles.buttonText}>add count</p>
+        </button>
+      </div>
     </div>
   );
 };

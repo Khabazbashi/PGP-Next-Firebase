@@ -1,23 +1,30 @@
 import { useEffect, useState } from "react";
+import { counterRepo } from "../counterrepo";
 import Quotes from "./quotes";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const [quotes, setQuotes] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [quotes, setQuotes] = useState([]);
+  const [counts, setCounts] = useState([]);
+
+  const fetchQuotes = async () => {
+    const apiResponse = await fetch(
+      `https://api.chucknorris.io/jokes/search?query=hand`
+    );
+    const quotesList = await apiResponse.json();
+    setQuotes(quotesList.result);
+  };
+
+  const fetchCounts = async () => {
+    await counterRepo.getCounts().then((response) => setCounts(response));
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const apiResponse = await fetch(
-        `https://api.chucknorris.io/jokes/search?query=hand`
-      );
-      const quotesList = await apiResponse.json();
-      setQuotes(quotesList.result);
-      setLoading(false);
-    };
-
-    fetchData();
+    fetchCounts();
+    fetchQuotes();
   }, []);
 
   return (
@@ -28,7 +35,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {isLoading ? <p>Loading...</p> : <Quotes quotes={quotes} />}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <Quotes quotes={quotes} counts={counts} />
+        )}
       </main>
     </div>
   );

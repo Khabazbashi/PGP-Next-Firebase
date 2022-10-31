@@ -1,7 +1,7 @@
 import Quote from "./quote";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const Quotes = ({ quotes, counts }) => {
+const Quotes = ({ quotes, counts, handleClick }) => {
   useEffect(() => {}, [counts]);
 
   return (
@@ -12,6 +12,7 @@ const Quotes = ({ quotes, counts }) => {
             quote={quote}
             key={index}
             count={counts.filter((x) => x.id === quote.id)}
+            handleClick={handleClick}
           />
         );
       })}

@@ -22,10 +22,17 @@ export default function Home() {
     setLoading(false);
   };
 
+  async function handleClick(id, count) {
+    await counterRepo.handleClick(id, count);
+    fetchCounts();
+  }
+
   useEffect(() => {
     fetchCounts();
     fetchQuotes();
   }, []);
+
+  useEffect(() => {}, [counts, handleClick]);
 
   return (
     <div className={styles.container}>
@@ -38,7 +45,7 @@ export default function Home() {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <Quotes quotes={quotes} counts={counts} />
+          <Quotes quotes={quotes} counts={counts} handleClick={handleClick} />
         )}
       </main>
     </div>

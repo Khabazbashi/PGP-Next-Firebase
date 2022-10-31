@@ -1,22 +1,19 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-// ... from project settings
+// Import config variables from project settings
 const firebaseConfig = {
-  apiKey: "AIzaSyAvYanC0xsVlq0my8De1xSBburNuBJ6zAg",
-  authDomain: "pgp-next.firebaseapp.com",
-  projectId: "pgp-next",
-  storageBucket: "pgp-next.appspot.com",
-  messagingSenderId: "71994321047",
-  appId: "1:71994321047:web:a2bdf57cdbf64461ac21d2",
+  apiKey: "AIzaSyCk3XwVGZp3YE361i6l1pd3bBa42DHAIT0",
+  authDomain: "chuck-quotes-a6754.firebaseapp.com",
+  projectId: "chuck-quotes-a6754",
+  storageBucket: "chuck-quotes-a6754.appspot.com",
+  messagingSenderId: "822648911675",
+  appId: "1:822648911675:web:a91f57e333061eca2aa91e",
 };
 
 // Initialize app
-const app = !firebase.apps.length
-  ? firebase.initializeApp(firebaseConfig)
-  : firebase.app();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// export the different parts of firebase that you want to use
-const db = app.firestore();
-const auth = app.auth();
-const storage = app.storage();
-export { db, auth, storage };
+// Export components
+export { db };

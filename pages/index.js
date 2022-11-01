@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { counterRepo } from "../counterrepo";
+import { repo } from "../firestore/repo";
+import header from "../public/header";
 import Quotes from "../components/quotes";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -7,7 +8,7 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   const [isLoading, setLoading] = useState(true);
   const [quotes, setQuotes] = useState([]);
-  const [counts, setCounts] = useState([]);
+  const [allData, setAllData] = useState([]);
 
   const fetchQuotes = async () => {
     const apiResponse = await fetch(
@@ -17,22 +18,27 @@ export default function Home() {
     setQuotes(quotesList.result);
   };
 
-  const fetchCounts = async () => {
-    await counterRepo.getCounts().then((response) => setCounts(response));
+  const fetchQuotesData = async () => {
+    await repo.getData().then((response) => setAllData(response));
     setLoading(false);
   };
 
   async function handleClick(id, count) {
-    await counterRepo.handleClick(id, count);
-    fetchCounts();
+    await repo.incrementCount(id, count);
+    fetchQuotesData();
+  }
+
+  async function handleSubmit(id, input, username, count) {
+    await repo.addComment(id, input, username, count);
+    fetchQuotesData();
   }
 
   useEffect(() => {
-    fetchCounts();
+    fetchQuotesData();
     fetchQuotes();
   }, []);
 
-  useEffect(() => {}, [counts, handleClick]);
+  useEffect(() => {}, [allData, handleClick, handleSubmit]);
 
   return (
     <div>
@@ -48,18 +54,20 @@ export default function Home() {
         </div>
       ) : (
         <main className={styles.main}>
+          <p></p>
           <div className={styles.header}>
-            <img
-              className={styles.headerImage}
-              src="https://media.tenor.com/hOF1YZDv6dcAAAAC/fire-gif.gif"
-            />
-            <h1 className={styles.title}>Chuck Quote Tracker</h1>
-            <img
-              className={styles.headerImage}
-              src="https://media.tenor.com/hOF1YZDv6dcAAAAC/fire-gif.gif"
-            />
+            {header.map((x, i) => (
+              <p className={x.name} key={i}>
+                {x.letter}
+              </p>
+            ))}
           </div>
-          <Quotes quotes={quotes} counts={counts} handleClick={handleClick} />
+          <Quotes
+            quotes={quotes}
+            linkedData={allData}
+            handleSubmit={handleSubmit}
+            handleClick={handleClick}
+          />
         </main>
       )}
     </div>

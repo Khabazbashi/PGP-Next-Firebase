@@ -5,3 +5,19 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+@media (min-width: 1280px) { 
+
+    .container {
+        width: 100%;
+    }
+
+ }
+
+ @media (min-width: 1536px) {
+    
+    .container {
+        max-width: 80%;
+    } 
+
+}

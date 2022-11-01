@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display&family=Noto+Sans+Mono=swap');
+
+
 html,
 body {
-  color: white;
-  background: linear-gradient(to top,#870000, #040205);
-
+  color: #e1e1e1;
+  background-color: #040205;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
